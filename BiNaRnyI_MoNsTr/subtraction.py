@@ -1,29 +1,70 @@
-from arithmetic_operation import ArithmeticOperation
 from number_value import NumberValue
-from converter import Converter
 
 
-class Subtraction(ArithmeticOperation):
-    """Віднімання стовпчиком: реалізує логіку позики розряду."""
+class Subtraction:
+    # Клас для виконання віднімання та візуалізації на дошці
+    def __init__(self, num1: NumberValue, num2: NumberValue) -> None:
+        self.num1 = num1
+        self.num2 = num2
+        self.steps = []
+        self.canvas_data = {}
 
-    def execute(self):
-        # Валідація на від'ємний результат
-        if self.num1 < self.num2: raise ValueError("Результат не може бути від'ємним!")
+    def execute(self) -> NumberValue:
+        bin1 = self.num1.binary_string
+        bin2 = self.num2.binary_string
+        borrow = 0
+        result_bits = []
+        borrow_bits = []
 
-        max_len = max(len(self.num1), len(self.num2))
-        s1, s2 = self.num1.get_padded_string(max_len), self.num2.get_padded_string(max_len)
-        self._add_step(f"Вирівнюємо: {s1} - {s2}")
+        self.steps.append({
+            "description": f"Початок віднімання: {self.num1.to_decimal()} (BIN: {bin1}) мінус {self.num2.to_decimal()} (BIN: {bin2})",
+            "result": ""
+        })
 
-        res_bits, borrow, bits = [], 0, list(map(int, s1))
-        # Проходимо справа наліво
-        for i in range(max_len - 1, -1, -1):
-            v1, v2 = bits[i] - borrow, int(s2[i])
-            # Визначаємо, чи потрібно позичати одиницю
-            cur_borrow = 1 if v1 < v2 else 0
-            cur_res = (v1 + 2) - v2 if cur_borrow else v1 - v2
-            res_bits.insert(0, str(cur_res))
-            self._add_step(f"Позиція {max_len - i}: позика {cur_borrow}", "".join(res_bits))
-            borrow = cur_borrow
+        for i in range(7, -1, -1):
+            bit1 = int(bin1[i])
+            bit2 = int(bin2[i])
 
-        final_bin = "".join(res_bits).lstrip("0") or "0"
-        return NumberValue(final_bin, Converter.to_decimal(final_bin))
+            borrow_bits.insert(0, str(borrow))
+
+            sub_val = bit1 - bit2 - borrow
+            if sub_val < 0:
+                res_bit = (sub_val + 2) % 2
+                borrow = 1
+            else:
+                res_bit = sub_val % 2
+                borrow = 0
+
+            result_bits.insert(0, str(res_bit))
+            self.steps.append({
+                "description": f"Розряд {7 - i}: віднімаю біт {bit2} від {bit1} з урахуванням позики {borrow_bits[0]}",
+                "result": f"Результат розряду: {res_bit}, нова позика у старшого розряду: {borrow}"
+            })
+
+        final_bin = "".join(result_bits)
+
+        # Самі вираховуємо точний десятковий результат
+        val1 = self.num1.to_decimal()
+        val2 = self.num2.to_decimal()
+        res_val = val1 - val2
+        # Емуляція переповнення регістру (-128...127)
+        res_val = ((res_val + 128) % 256) - 128
+
+        self.canvas_data = {
+            "type": "-",
+            "s1": bin1,
+            "s2": bin2,
+            "res": final_bin,
+            "carries": "".join(borrow_bits)
+        }
+
+        self.steps.append({
+            "description": "Формування остаточного 8-бітного знакового результату",
+            "result": final_bin
+        })
+
+        # Передаємо готове число res_val
+        return NumberValue(final_bin, res_val)
+
+    def get_steps(self) -> list:
+        return self.steps

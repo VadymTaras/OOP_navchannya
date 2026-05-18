@@ -1,36 +1,66 @@
-from arithmetic_operation import ArithmeticOperation
 from number_value import NumberValue
-from converter import Converter
 
 
-class Addition(ArithmeticOperation):
-    """Модуль додавання: реалізує логіку total = bit1 + bit2 + carry."""
+class Addition:
+    # Клас для виконання додавання та генерації даних для візуалізації
+    def __init__(self, num1: NumberValue, num2: NumberValue) -> None:
+        self.num1 = num1
+        self.num2 = num2
+        self.steps = []
+        self.canvas_data = {}
 
-    def execute(self):
-        # Вирівнюємо довжину рядків для зручності
-        max_len = max(len(self.num1), len(self.num2))
-        s1 = self.num1.get_padded_string(max_len)
-        s2 = self.num2.get_padded_string(max_len)
+    def execute(self) -> NumberValue:
+        bin1 = self.num1.binary_string
+        bin2 = self.num2.binary_string
+        carry = 0
+        result_bits = []
+        carry_bits = []
 
-        self._add_step(f"Вирівнюємо числа: {s1} та {s2}")
+        self.steps.append({
+            "description": f"Початок додавання: {self.num1.to_decimal()} (BIN: {bin1}) плюс {self.num2.to_decimal()} (BIN: {bin2})",
+            "result": ""
+        })
 
-        res_bits, carry = [], 0
-        # Обчислюємо кожен розряд справа наліво
-        for i in range(max_len - 1, -1, -1):
-            bit1, bit2 = int(s1[i]), int(s2[i])
-            total = bit1 + bit2 + carry
+        for i in range(7, -1, -1):
+            bit1 = int(bin1[i])
+            bit2 = int(bin2[i])
 
-            # Поточний біт результату (остача від ділення на 2)
-            res_bits.insert(0, str(total % 2))
-            # Перенос на наступний розряд (ціла частина від ділення на 2)
-            carry = total // 2
+            carry_bits.insert(0, str(carry))
 
-            desc = f"Крок на позиції {max_len - i}: {bit1}+{bit2} (перенос {carry})"
-            self._add_step(desc, "".join(res_bits))
+            sum_val = bit1 + bit2 + carry
+            res_bit = sum_val % 2
+            carry = sum_val // 2
 
-        if carry:
-            res_bits.insert(0, "1")
-            self._add_step("Додаємо останній перенос одиниці", "".join(res_bits))
+            result_bits.insert(0, str(res_bit))
+            self.steps.append({
+                "description": f"Розряд {7 - i}: додаю {bit1} і {bit2} з переносом {carry_bits[0]}",
+                "result": f"біт {res_bit}, новий перенос {carry}"
+            })
 
-        final_bin = "".join(res_bits)
-        return NumberValue(final_bin, Converter.to_decimal(final_bin))
+        final_bin = "".join(result_bits)
+
+        # Рахуємо чисте десяткове значення з урахуванням знаку 8-бітного процесора
+        val1 = self.num1.to_decimal()
+        val2 = self.num2.to_decimal()
+        res_val = val1 + val2
+        # Емуляція переповнення регістру (-128...127)
+        res_val = ((res_val + 128) % 256) - 128
+
+        self.canvas_data = {
+            "type": "+",
+            "s1": bin1,
+            "s2": bin2,
+            "res": final_bin,
+            "carries": "".join(carry_bits)
+        }
+
+        self.steps.append({
+            "description": "Формування остаточного 8-бітного результату",
+            "result": final_bin
+        })
+
+        # Передаємо вже готове, залізобетонно пораховане десяткове число res_val
+        return NumberValue(final_bin, res_val)
+
+    def get_steps(self) -> list:
+        return self.steps

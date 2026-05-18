@@ -1,0 +1,32 @@
+# Кеш компілятора Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Віртуальне оточення
+.venv/
+venv/
+env/
+ENV/
+
+# Середовище розробки JetBrains CLion
+.idea/
+*.iws
+out/
+cmake-build-debug/
+cmake-build-release/
+
+# Результати пакування додатка
+build/
+dist/
+*.spec
+
+# Локальні звіти, журнали та історія розрахунків
+*.log
+app.log
+protocol.txt
+history.json
+
+# Тимчасові файли операційної системи
+.DS_Store
+Thumbs.db
