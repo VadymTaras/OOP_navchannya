@@ -1,8 +1,7 @@
 from number_value import NumberValue
 
-
 class Addition:
-    # Клас для виконання додавання та генерації даних для візуалізації
+    # Клас для додавання чисел та збору кроків для дошки
     def __init__(self, num1: NumberValue, num2: NumberValue) -> None:
         self.num1 = num1
         self.num2 = num2
@@ -39,11 +38,11 @@ class Addition:
 
         final_bin = "".join(result_bits)
 
-        # Рахуємо чисте десяткове значення з урахуванням знаку 8-бітного процесора
+        # Рахуємо десяткове значення з урахуванням знаку
         val1 = self.num1.to_decimal()
         val2 = self.num2.to_decimal()
         res_val = val1 + val2
-        # Емуляція переповнення регістру (-128...127)
+        # Обрізання під межі від -128 до 127
         res_val = ((res_val + 128) % 256) - 128
 
         self.canvas_data = {
@@ -59,7 +58,6 @@ class Addition:
             "result": final_bin
         })
 
-        # Передаємо вже готове, залізобетонно пораховане десяткове число res_val
         return NumberValue(final_bin, res_val)
 
     def get_steps(self) -> list:

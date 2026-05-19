@@ -6,7 +6,7 @@ import logger_config
 if __name__ == "__main__":
     root = tk.Tk()
 
-    # Запуск перехоплювача помилок перед ініціалізацією візуальних компонентів
+    # Запуск логера перед створенням вікна
     logger_config.init_logger(root)
 
     view = AppView(root)

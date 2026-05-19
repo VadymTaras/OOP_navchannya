@@ -1,6 +1,6 @@
 import typing
 
-# Повна колекція з виправленим конфліктом відображення у темі матриці
+# Набір кольорових тем для інтерфейсу додатка
 THEMES: typing.Dict[str, typing.Dict[str, str]] = {
     "cyberpunk": {
         "bg_main": "#0c0c0e", "bg_panel": "#141416", "btn_bg": "#232329",
@@ -12,7 +12,6 @@ THEMES: typing.Dict[str, typing.Dict[str, str]] = {
         "bg_main": "#000000", "bg_panel": "#051505", "btn_bg": "#002200",
         "btn_active": "#33ff33", "entry_bg": "#001100", "border_color": "#005500",
         "accent_green": "#00ff00", "accent_cyan": "#33ff33", "accent_red": "#ff0000",
-        # Змінюю колір базового тексту на помірний зелений, щоб виділення стало видимим
         "fg_main": "#00aa00", "text_fg": "#00cc00", "text_dim": "#008800"
     },
     "dracula": {

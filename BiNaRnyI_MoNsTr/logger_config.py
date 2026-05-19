@@ -3,9 +3,8 @@ import sys
 import tkinter as tk
 from tkinter import messagebox
 
-
 def init_logger(root: tk.Tk) -> None:
-    # Конфігурація промислового журналу запису подій
+    # Звичайне логування подій та помилок додатка
     logging.basicConfig(
         filename="app.log",
         level=logging.INFO,
@@ -19,7 +18,7 @@ def init_logger(root: tk.Tk) -> None:
             sys.__excepthook__(exc_type, exc_value, exc_traceback)
             return
         logging.critical("Невідловлена системна помилка:", exc_info=(exc_type, exc_value, exc_traceback))
-        # Перенаправляю трасування у стандартний потік консолі CLion
+        # Вивід помилки в консоль CLion
         sys.__excepthook__(exc_type, exc_value, exc_traceback)
 
     sys.excepthook = handle_sys_exception
@@ -30,3 +29,4 @@ def init_logger(root: tk.Tk) -> None:
         sys.__excepthook__(exc_type, exc_value, exc_traceback)
 
     root.report_callback_exception = handle_tk_exception
+}

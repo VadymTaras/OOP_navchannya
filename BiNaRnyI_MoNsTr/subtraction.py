@@ -1,8 +1,7 @@
 from number_value import NumberValue
 
-
 class Subtraction:
-    # Клас для виконання віднімання та візуалізації на дошці
+    # Клас для віднімання чисел та виводу на дошку
     def __init__(self, num1: NumberValue, num2: NumberValue) -> None:
         self.num1 = num1
         self.num2 = num2
@@ -38,16 +37,15 @@ class Subtraction:
             result_bits.insert(0, str(res_bit))
             self.steps.append({
                 "description": f"Розряд {7 - i}: віднімаю біт {bit2} від {bit1} з урахуванням позики {borrow_bits[0]}",
-                "result": f"Результат розряду: {res_bit}, нова позика у старшого розряду: {borrow}"
+                "result": f"Результат розряду: {res_bit}, нова позика: {borrow}"
             })
 
         final_bin = "".join(result_bits)
 
-        # Самі вираховуємо точний десятковий результат
         val1 = self.num1.to_decimal()
         val2 = self.num2.to_decimal()
         res_val = val1 - val2
-        # Емуляція переповнення регістру (-128...127)
+        # Обрізання під межі від -128 до 127
         res_val = ((res_val + 128) % 256) - 128
 
         self.canvas_data = {
@@ -59,11 +57,10 @@ class Subtraction:
         }
 
         self.steps.append({
-            "description": "Формування остаточного 8-бітного знакового результату",
+            "description": "Формування остаточного 8-бітного результату",
             "result": final_bin
         })
 
-        # Передаємо готове число res_val
         return NumberValue(final_bin, res_val)
 
     def get_steps(self) -> list:

@@ -6,7 +6,7 @@ from graphic_board import GraphicBoard
 import demo_manager
 
 class AppView:
-    # Клас для відображення вікна додатка зі спрощеними шкільними підказками
+    # Клас для побудови вікна програми та елементів інтерфейсу
     def __init__(self, root: tk.Tk) -> None:
         self.root = root
         self.root.title("БіНаРнИй МоНсТр 3.0 - MVC Edition")
@@ -131,7 +131,6 @@ class AppView:
         self.log_header = tk.Frame(self.log_frame)
         self.log_header.pack(side=tk.TOP, fill=tk.X, pady=2)
 
-        # Повертаю гарну українську назву для текстового фрейму
         self.log_title = tk.Label(self.log_header, text="Покроковий журнал дій", font=self.font_main)
         self.log_title.pack(side=tk.LEFT, anchor=tk.W)
 

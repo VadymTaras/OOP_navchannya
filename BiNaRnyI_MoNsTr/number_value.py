@@ -1,5 +1,5 @@
 class NumberValue:
-    # Клас для збереження 8-бітного двійкового числа та його десяткового значення
+    # Клас для збереження двійкового числа та його десяткового значення
     def __init__(self, binary_string: str, decimal_value: int = None) -> None:
         self.binary_string = binary_string
 
@@ -9,16 +9,16 @@ class NumberValue:
             self._decimal_value = decimal_value
 
     def _parse_binary_to_decimal(self, bin_str: str) -> int:
-        # Примусово доповнюємо нулями до 8 біт для точного аналізу розрядів
+        # Доповнюємо нулями зліва до 8 біт
         padded = bin_str.zfill(8)
 
-        # Перевіряємо старший знаковий біт (8-бітна знакова арифметика)
+        # Перевіряємо знаковий біт для 8-бітної арифметики
         if padded[0] == "1":
-            # Якщо старший біт 1 - це від'ємне число у додатковому коді
+            # Перевід від'ємного числа через інверсію
             inverted = "".join("1" if b == "0" else "0" for b in padded)
             return -(int(inverted, 2) + 1)
         else:
-            # Якщо старший біт 0 - це звичайне додатне число
+            # Якщо старший біт 0 - це додатне число
             return int(padded, 2)
 
     def to_decimal(self) -> int:

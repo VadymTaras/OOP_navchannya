@@ -4,7 +4,6 @@ from tkinter import messagebox
 import json
 import os
 
-# Імпорт реальних математичних та службових модулів програми
 from number_value import NumberValue
 from converter import Converter
 import addition
@@ -14,9 +13,8 @@ import division
 import bitwise_ops
 from app_view import AppView
 
-
 class AppController:
-    # Сполучний контролер між UI елементами та арифметичними обчисленнями розрядів
+    # Сполучний контролер між інтерфейсом UI та обчисленнями
     def __init__(self, view: AppView) -> None:
         self.view = view
         self.current_theme = "cyberpunk"
@@ -26,7 +24,7 @@ class AppController:
 
         self.view.update_colors(self.current_theme)
         self.view.board.draw_placeholder(self.current_theme)
-        logging.info("Контролер успішно ініціалізовано, дебаг повністю вимкнено")
+        logging.info("Контролер успішно ініціалізовано")
 
     def _setup_bindings(self) -> None:
         self.view.header_btns["toggle_mode"].config(command=self._toggle_mode)
@@ -44,7 +42,6 @@ class AppController:
         logging.info(f"Змінено режим обчислень на {mode_str}")
 
     def _toggle_theme(self) -> None:
-        # Отримуємо список усіх доступних тем для динамічного перемикання по колу
         theme_keys = list(self.view.themes.keys())
         try:
             current_idx = theme_keys.index(self.current_theme)
@@ -55,7 +52,6 @@ class AppController:
         self.current_theme = theme_keys[next_idx]
         self.view.update_colors(self.current_theme)
 
-        # Виправлено збивання стану: якщо на дошці є біти, перемальовую їх у новій палітрі
         if self.view.board.last_data:
             self.view.board.draw_canvas(self.view.board.last_data, self.current_theme)
         else:
@@ -64,7 +60,7 @@ class AppController:
         logging.info(f"Змінено кольорову тему додатка на {self.current_theme}")
 
     def _show_history(self) -> None:
-        logging.info("Запит розробника на відображення історії операцій")
+        logging.info("Запит відображення історії операцій")
         self.view.steps_area.config(state="normal")
         self.view.steps_area.delete("1.0", "end")
 
@@ -84,13 +80,13 @@ class AppController:
                     self.view.steps_area.insert("end", prefix, "info")
                     self.view.steps_area.insert("end", f"{result}\n", "result")
             except Exception as e:
-                self.view.steps_area.insert("end", f"Помилка читання файлу історії: {str(e)}\n", "error")
+                self.view.steps_area.insert("end", f"Помилка читання історії: {str(e)}\n", "error")
         else:
             self.view.steps_area.insert("end", "Файл історії не знайдено\n", "info")
         self.view.steps_area.config(state="disabled")
 
     def _clear_history(self) -> None:
-        logging.info("Запит розробника на повне очищення історії")
+        logging.info("Запит на очищення історії")
         try:
             with open("history.json", "w", encoding="utf-8") as f:
                 json.dump([], f)
@@ -116,7 +112,7 @@ class AppController:
             with open("history.json", "w", encoding="utf-8") as f:
                 json.dump(history_data, f, ensure_ascii=False, indent=4)
         except Exception as e:
-            logging.error(f"Помилка запису в лог історії: {str(e)}")
+            logging.error(f"Помилка запису в історію: {str(e)}")
 
     def _on_operation_click(self, op: str) -> None:
         a_txt = self.view.entry_a.get().strip()
@@ -206,5 +202,5 @@ class AppController:
             logging.info(f"Операція {op} успішно прорахована")
 
         except Exception as e:
-            logging.error(f"Критична помилка при виконанні дії {op}: {str(e)}")
+            logging.error(f"Помилка при виконанні дії {op}: {str(e)}")
             raise e

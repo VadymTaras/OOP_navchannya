@@ -1,5 +1,5 @@
 class Converter:
-    # Утиліта для валідації вводу та конвертації систем числення
+    # Перевірка вводу та конвертація числення
 
     @staticmethod
     def clean_input(raw: str, mode: str, db) -> str | bool:
@@ -29,7 +29,7 @@ class Converter:
                 val = int(cleaned)
                 if val < -128 or val > 127:
                     if db and db.is_active:
-                        db.log(f"Відхилено: {val} виходить за межі (-128...127).")
+                        db.log(f"Відхилено: {val} виходить за межі від -128 до 127.")
                     return False
                 return str(val)
             except ValueError:
@@ -43,11 +43,10 @@ class Converter:
 
     @staticmethod
     def to_decimal(binary_str: str) -> int:
-        # Примусово доповнюємо нулями зліва до 8 біт, щоб уникнути None результатів
+        # Доповнюємо нулями зліва до 8 біт
         padded_str = binary_str.zfill(8)
 
         if padded_str[0] == '1':
-            # Якщо старший біт 1 - це від'ємне число в додатковому коді
             inverted = "".join("1" if b == "0" else "0" for b in padded_str)
             return -(int(inverted, 2) + 1)
         return int(padded_str, 2)

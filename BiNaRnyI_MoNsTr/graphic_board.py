@@ -2,23 +2,23 @@ import tkinter as tk
 from themes import THEMES
 
 class GraphicBoard:
-    # Клас для графічного відображення бітової сітки розрядів на полотні Canvas
+    # Відображення бітової сітки розрядів на Canvas
     def __init__(self, master: tk.Frame, font_style) -> None:
         self.master = master
         self.font = font_style
 
-        # Контейнери для збереження останнього стану з метою динамічного ресайзу
+        # Збереження останнього стану для зміни розмірів вікна
         self.last_data = None
         self.last_theme_key = None
 
         self.canvas = tk.Canvas(master, height=215, bd=0, highlightthickness=0)
         self.canvas.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
 
-        # Прив'язую подію зміни розмірів вікна до методу перерахунку центру
+        # Подія зміни розмірів вікна
         self.canvas.bind("<Configure>", self._on_resize)
 
     def _on_resize(self, event) -> None:
-        # Автоматичне перемальовування сітки при зміні розмірів екрана
+        # Перемальовування сітки при зміні розміру екрана
         if self.last_data and self.last_theme_key:
             self.draw_canvas(self.last_data, self.last_theme_key)
         elif self.last_theme_key:
@@ -31,7 +31,6 @@ class GraphicBoard:
 
         self.canvas.config(bg=theme["bg_main"])
 
-        # Динамічне обчислення центральної точки для підказки
         canvas_width = self.canvas.winfo_width()
         if canvas_width <= 1:
             canvas_width = 670
@@ -54,14 +53,12 @@ class GraphicBoard:
 
         self.canvas.config(bg=theme["bg_panel"])
 
-        # Захист від IndexError: примусово підганяю кожне значення під 8 біт
         carries = str(data.get("carries", "00000000")).zfill(8)[-8:]
         op_type = data.get("type", "+")
         s1 = str(data.get("s1", "00000000")).zfill(8)[-8:]
         s2 = str(data.get("s2", "00000000")).zfill(8)[-8:]
         res = str(data.get("res", "00000000")).zfill(8)[-8:]
 
-        # Динамічний розрахунок відступу X для повного центрування сітки матриці бітів
         canvas_width = self.canvas.winfo_width()
         if canvas_width <= 1:
             canvas_width = 670

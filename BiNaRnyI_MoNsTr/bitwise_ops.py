@@ -1,9 +1,8 @@
 from typing import Optional, Any
 from number_value import NumberValue
 
-
 class BitwiseAnd:
-    # Клас для побітового І (AND) з детальним покроковим звітом
+    # Побітове І (AND) з описом кожного розряду
     def __init__(self, num1: NumberValue, num2: NumberValue) -> None:
         self.num1 = num1
         self.num2 = num2
@@ -15,11 +14,10 @@ class BitwiseAnd:
         res_bits = []
 
         self.steps.append({
-            "description": f"Початок операції побітового І (AND) для рядків:\n   A: {b1}\n   B: {b2}",
+            "description": f"Початок операції побітового І (AND):\n   A: {b1}\n   B: {b2}",
             "result": ""
         })
 
-        # Порозрядний аналіз для протоколу
         for i in range(8):
             bit1 = int(b1[i])
             bit2 = int(b2[i])
@@ -43,9 +41,8 @@ class BitwiseAnd:
     def get_steps(self) -> list:
         return self.steps
 
-
 class BitwiseOr:
-    # Клас для побітового АБО (OR) з покроковим перебором
+    # Побітове АБО (OR) по розрядах
     def __init__(self, num1: NumberValue, num2: NumberValue) -> None:
         self.num1 = num1
         self.num2 = num2
@@ -57,7 +54,7 @@ class BitwiseOr:
         res_bits = []
 
         self.steps.append({
-            "description": f"Початок операції побітового АБО (OR) для рядків:\n   A: {b1}\n   B: {b2}",
+            "description": f"Початок операції побітового АБО (OR):\n   A: {b1}\n   B: {b2}",
             "result": ""
         })
 
@@ -84,9 +81,8 @@ class BitwiseOr:
     def get_steps(self) -> list:
         return self.steps
 
-
 class BitwiseXor:
-    # Клас для побітового виключного АБО (XOR)
+    # Побітове виключне АБО (XOR)
     def __init__(self, num1: NumberValue, num2: NumberValue) -> None:
         self.num1 = num1
         self.num2 = num2
@@ -98,7 +94,7 @@ class BitwiseXor:
         res_bits = []
 
         self.steps.append({
-            "description": f"Початок операції побітового XOR для рядків:\n   A: {b1}\n   B: {b2}",
+            "description": f"Початок операції побітового XOR:\n   A: {b1}\n   B: {b2}",
             "result": ""
         })
 
@@ -125,9 +121,8 @@ class BitwiseXor:
     def get_steps(self) -> list:
         return self.steps
 
-
 class BitwiseNot:
-    # Клас для побітової інверсії НЕ (NOT)
+    # Побітова інверсія НЕ (NOT)
     def __init__(self, num1: NumberValue, num2: Optional[NumberValue] = None) -> None:
         self.num1 = num1
         self.steps = []
@@ -163,9 +158,8 @@ class BitwiseNot:
     def get_steps(self) -> list:
         return self.steps
 
-
 class ShiftLeft:
-    # Клас для зсуву бітів вліво (імітація зсувного регістра)
+    # Логічний зсув бітів вліво
     def __init__(self, num1: NumberValue, num2: NumberValue) -> None:
         self.num1 = num1
         self.num2 = num2
@@ -190,7 +184,7 @@ class ShiftLeft:
         else:
             final_bin = b1[shift:] + ("0" * shift)
             self.steps.append({
-                "description": f"Виштовхую зліва {shift} старших біт(а): '{b1[:shift]}'",
+                "description": f"Виштовхую зліва {shift} старших бітів: '{b1[:shift]}'",
                 "result": "видалено"
             })
             self.steps.append({
@@ -198,20 +192,18 @@ class ShiftLeft:
                 "result": ""
             })
             self.steps.append({
-                "description": f"Дописую справа {shift} технічних нулів порожніх розрядів",
+                "description": f"Дописую справа {shift} нулів розрядів",
                 "result": final_bin
             })
 
-        self.canvas_data = {"type": "<<", "s1": b1, "s2": self.num2.binary_string, "res": final_bin,
-                            "carries": "00000000"}
+        self.canvas_data = {"type": "<<", "s1": b1, "s2": self.num2.binary_string, "res": final_bin, "carries": "00000000"}
         return NumberValue(final_bin, None)
 
     def get_steps(self) -> list:
         return self.steps
 
-
 class ShiftRight:
-    # Клас для логічного зсуву бітів вправо
+    # Логічний зсув бітів вправо
     def __init__(self, num1: NumberValue, num2: NumberValue) -> None:
         self.num1 = num1
         self.num2 = num2
@@ -236,7 +228,7 @@ class ShiftRight:
         else:
             final_bin = ("0" * shift) + b1[:8 - shift]
             self.steps.append({
-                "description": f"Виштовхую справа {shift} молодших біт(а): '{b1[8 - shift:]}'",
+                "description": f"Виштовхую справа {shift} молодших бітів: '{b1[8 - shift:]}'",
                 "result": "видалено"
             })
             self.steps.append({
@@ -244,12 +236,11 @@ class ShiftRight:
                 "result": ""
             })
             self.steps.append({
-                "description": f"Дописую зліва {shift} технічних нулів для відновлення сітки",
+                "description": f"Дописую зліва {shift} нулів для відновлення сітки",
                 "result": final_bin
             })
 
-        self.canvas_data = {"type": ">>", "s1": b1, "s2": self.num2.binary_string, "res": final_bin,
-                            "carries": "00000000"}
+        self.canvas_data = {"type": ">>", "s1": b1, "s2": self.num2.binary_string, "res": final_bin, "carries": "00000000"}
         return NumberValue(final_bin, None)
 
     def get_steps(self) -> list:

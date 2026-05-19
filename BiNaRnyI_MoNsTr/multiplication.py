@@ -1,8 +1,7 @@
 from number_value import NumberValue
 
-
 class Multiplication:
-    # Клас для виконання множення за алгоритмом АЛП з покроковим протоколом
+    # Клас для множення з покроковим описом дії
     def __init__(self, num1: NumberValue, num2: NumberValue) -> None:
         self.num1 = num1
         self.num2 = num2
@@ -20,14 +19,13 @@ class Multiplication:
             "result": ""
         })
 
-        # Розрахунок результату для 8-бітної знакової сітки
         raw_res = val1 * val2
+        # Обрізання під межі від -128 до 127
         res_val = ((raw_res + 128) % 256) - 128
 
         from converter import Converter
         final_bin = Converter.to_binary(res_val)
 
-        # Імітація додавання часткових добутків по розрядах множника
         accumulated = 0
         for i in range(8):
             multiplier_bit = int(bin2[7 - i])
@@ -35,12 +33,12 @@ class Multiplication:
                 shifted_val = val1 << i
                 accumulated += shifted_val
                 self.steps.append({
-                    "description": f"Крок {i + 1}: Біт множника рівний 1. Додаю добуток зі зсувом вліво на {i} розряд(ів)",
+                    "description": f"Крок {i + 1}: Біт множника рівний 1. Додаю добуток зі зсувом вліво на {i} розрядів",
                     "result": f"+ {Converter.to_binary((shifted_val) & 0xFF)}"
                 })
             else:
                 self.steps.append({
-                    "description": f"Крок {i + 1}: Біт множника рівний 0. Додавання часткового добутку пропущено",
+                    "description": f"Крок {i + 1}: Біт множника рівний 0. Пропускаю крок",
                     "result": "00000000"
                 })
 
@@ -49,15 +47,15 @@ class Multiplication:
             "result": f"DEC: {raw_res}"
         })
 
-        # Перевірка на ефект переповнення 8-бітного регістру
+        # Перевірка на вихід за межі байту
         if raw_res < -128 or raw_res > 127:
             self.steps.append({
-                "description": f"Увага! Результат {raw_res} виходить за межі (-128...127). Спрацював Overflow Flag (OF)",
-                "result": f"Циклічний зсув сітки: {res_val}"
+                "description": f"Увага! Результат {raw_res} виходить за межі від -128 до 127. Спрацював прапорець OF",
+                "result": f"Зсув сітки: {res_val}"
             })
 
         self.steps.append({
-            "description": "Фіксація кінцевого стану 8-бітного регістра результату",
+            "description": "Фіксація кінцевого стану 8-бітного результату",
             "result": final_bin
         })
 
