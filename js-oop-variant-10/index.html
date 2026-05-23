@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Pet Store OOP Management</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="store-wrapper">
+    <div>
+        <div class="section-block">
+            <div style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px;">
+                <h2>Каталог тварин зоомагазину</h2>
+
+                <div style="display: flex; gap: 15px; flex-wrap: wrap; background: #f7f9fa; padding: 15px; border-radius: 6px; align-items: flex-end;">
+                    <div style="flex: 1; min-width: 180px; display: flex; flex-direction: column; gap: 4px;">
+                        <label style="font-size: 12px; font-weight: bold; color: #4a5568;">Фільтр за видом:</label>
+                        <select id="filter-species" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #cbd5e0; background: white; height: 35px; box-sizing: border-box;">
+                            <option value="">Всі види</option>
+                            <option value="dog">Собаки</option>
+                            <option value="cat">Коти</option>
+                            <option value="bird">Птахи</option>
+                        </select>
+                    </div>
+
+                    <div style="flex: 1; min-width: 180px; display: flex; flex-direction: column; gap: 4px;">
+                        <label style="font-size: 12px; font-weight: bold; color: #4a5568;">Фільтр за породою/забарвленням:</label>
+                        <input type="text" id="filter-breed" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #cbd5e0; height: 35px; box-sizing: border-box;" placeholder="Назва або колір...">
+                    </div>
+
+                    <div style="flex: 1; min-width: 180px; display: flex; flex-direction: column; gap: 4px;">
+                        <label style="font-size: 12px; font-weight: bold; color: #4a5568;">Максимальний вік (років):</label>
+                        <input type="number" id="filter-age" min="0" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #cbd5e0; height: 35px; box-sizing: border-box;" placeholder="Будь-який вік">
+                    </div>
+                </div>
+            </div>
+            <div id="catalog-container" class="catalog-grid"></div>
+        </div>
+    </div>
+
+    <div>
+        <div class="section-block">
+            <h3>Облік та статистика</h3>
+            <div class="stats-bar">
+                <div class="stat-card"><b id="stat-count">0</b><span>Тварин</span></div>
+                <div class="stat-card"><b id="stat-sales">0</b><span>Продажів</span></div>
+                <div class="stat-card"><b id="stat-balance">0</b><span>Баланс</span></div>
+            </div>
+
+            <h3>Історія комерційних операцій</h3>
+            <ul id="history-list" class="history-box"></ul>
+        </div>
+    </div>
+</div>
+
+<div id="purchase-modal" class="modal-overlay">
+    <div class="modal-content">
+        <h4>Оформлення продажу</h4>
+        <p style="font-size: 13px; color: #666;">Ви купуєте тварину: <b id="selected-pet-name"></b></p>
+        <form id="purchase-form">
+            <input type="hidden" id="selected-pet-id">
+
+            <label style="font-size: 13px;">Прізвище покупця:</label>
+            <input type="text" id="buyer-lastname" class="input-field" required placeholder="Вкажіть прізвище">
+
+            <label style="font-size: 13px;">Ім'я покупця:</label>
+            <input type="text" id="buyer-firstname" class="input-field" required placeholder="Вкажіть ім'я">
+
+            <label style="font-size: 13px;">По батькові покупця:</label>
+            <input type="text" id="buyer-middlename" class="input-field" required placeholder="Вкажіть по батькові">
+
+            <div style="display: flex; gap: 10px; margin-top: 5px;">
+                <button type="submit" style="flex:1;">Підтвердити</button>
+                <button type="button" id="btn-cancel-purchase" style="flex:1; background:#7f8c8d;">Скасувати</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="module" src="src/app.js"></script>
+</body>
+</html>
