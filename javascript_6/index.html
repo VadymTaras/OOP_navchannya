@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Notification Management System</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="control-panel">
+    <h2>Панель керування сповіщеннями</h2>
+    <hr>
+
+    <div class="panel-section">
+        <h3>1. Текст сповіщення</h3>
+        <label>Заголовок: <input type="text" id="notif-title" value="Системне сповіщення"></label>
+        <label>Повідомлення: <input type="text" id="notif-message" value="Дія успішно виконана в системі."></label>
+    </div>
+
+    <div class="panel-section">
+        <h3>2. Тип та позиціонування</h3>
+        <label>Тип:
+            <select id="notif-type">
+                <option value="success">Success (Зелений)</option>
+                <option value="error">Error (Червоний)</option>
+                <option value="warning">Warning (Жовтий)</option>
+                <option value="info">Info (Синій)</option>
+            </select>
+        </label>
+
+        <label>Позиція на екрані:
+            <select id="notif-position">
+                <option value="top-right">top-right</option>
+                <option value="top-left">top-left</option>
+                <option value="bottom-right">bottom-right</option>
+                <option value="bottom-left">bottom-left</option>
+                <option value="top-center">top-center</option>
+                <option value="bottom-center">bottom-center</option>
+            </select>
+        </label>
+    </div>
+
+    <div class="panel-section">
+        <h3>3. Параметри поведінки</h3>
+        <label><input type="checkbox" id="notif-persistent"> Постійне сповіщення (Persistent)</label>
+        <label><input type="checkbox" id="notif-sound" checked> Звуковий сигнал</label>
+        <label><input type="checkbox" id="notif-actions"> Додати функціональні кнопки дій</label>
+    </div>
+
+    <div class="panel-section buttons-row">
+        <button id="btn-generate">Створити сповіщення</button>
+        <button id="btn-test-queue" class="btn-secondary">Тест черги (12 штук)</button>
+    </div>
+</div>
+
+<script type="module" src="src/app.js"></script>
+</body>
+</html>

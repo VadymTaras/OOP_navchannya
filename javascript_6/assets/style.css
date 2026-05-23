@@ -1,0 +1,226 @@
+:root {
+    --color-success: #2ecc71;
+    --color-error: #e74c3c;
+    --color-warning: #f1c40f;
+    --color-info: #3498db;
+    --bg-panel: #2c3e50;
+    --font: Arial, sans-serif;
+}
+
+body {
+    font-family: var(--font);
+    background-color: #f5f6fa;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.control-panel {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+}
+
+h2, h3 {
+    margin-top: 0;
+    color: var(--bg-panel);
+}
+
+.panel-section {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+input[type="text"], select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #34495e;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #2c3e50;
+}
+
+.btn-secondary {
+    background-color: #7f8c8d;
+}
+
+.btn-secondary:hover {
+    background-color: #95a5a6;
+}
+
+.buttons-row {
+    display: flex;
+    gap: 10px;
+}
+
+/* --- ПОЗИЦІОНУВАННЯ КОНТЕЙНЕРІВ --- */
+.notification-container {
+    position: fixed;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+    width: 100%;
+    max-width: 320px;
+    box-sizing: border-box;
+}
+
+.position-top-left { top: 0; left: 0; }
+.position-top-right { top: 0; right: 0; }
+.position-bottom-left { bottom: 0; left: 0; }
+.position-bottom-right { bottom: 0; right: 0; }
+.position-top-center { top: 0; left: 50%; transform: translateX(-50%); }
+.position-bottom-center { bottom: 0; left: 50%; transform: translateX(-50%); }
+
+/* --- СТИЛІ КАРТОК --- */
+.notification {
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    animation: notif-slide-in 0.3s ease-out;
+    transition: all 0.3s ease;
+    border-left: 5px solid #ccc;
+}
+
+.notification-success { border-left-color: var(--color-success); }
+.notification-error { border-left-color: var(--color-error); }
+.notification-warning { border-left-color: var(--color-warning); }
+.notification-info { border-left-color: var(--color-info); }
+
+.notification.dismissed {
+    animation: notif-fade-out 0.25s ease-in forwards;
+}
+
+.notification-content {
+    display: flex;
+    align-items: flex-start;
+    padding: 12px;
+    gap: 10px;
+}
+
+.notification-icon {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.notification-success .notification-icon { color: var(--color-success); }
+.notification-error .notification-icon { color: var(--color-error); }
+.notification-warning .notification-icon { color: var(--color-warning); }
+.notification-info .notification-icon { color: var(--color-info); }
+
+.notification-text {
+    flex-grow: 1;
+}
+
+.notification-title {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 2px;
+}
+
+.notification-message {
+    font-size: 13px;
+    color: #555;
+}
+
+.notification-close {
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+
+.notification-close:hover {
+    color: #333;
+}
+
+.notification-actions {
+    display: flex;
+    gap: 8px;
+    padding: 0 12px 12px 38px;
+}
+
+.action-btn {
+    padding: 4px 8px;
+    font-size: 11px;
+    background: #f0f0f0;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.action-btn:hover {
+    background: #e0e0e0;
+}
+
+/* --- ПРОГРЕС БАР --- */
+.notification-progress {
+    height: 4px;
+    width: 100%;
+    background: #edf0f2;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 100%;
+    background: #ccc;
+    transform-origin: left;
+}
+
+.notification-success .progress-bar { background: var(--color-success); }
+.notification-error .progress-bar { background: var(--color-error); }
+.notification-warning .progress-bar { background: var(--color-warning); }
+.notification-info .progress-bar { background: var(--color-info); }
+
+/* --- АНІМАЦІЇ --- */
+@keyframes notif-slide-in {
+    from { transform: translateY(15px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes notif-fade-out {
+    to { opacity: 0; transform: scale(0.95); }
+}
+
+@keyframes notification-progress-anim {
+    from { transform: scaleX(1); }
+    to { transform: scaleX(0); }
+}
+
+/* Адаптивна верстка */
+@media (max-width: 480px) {
+    .notification-container {
+        width: 100%;
+        max-width: 100%;
+        left: 0 !important;
+        right: 0 !important;
+        transform: none !important;
+    }
+}
