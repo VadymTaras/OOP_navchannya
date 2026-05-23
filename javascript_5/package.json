@@ -1,0 +1,13 @@
+{
+  "name": "javascript_5",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Лабораторна робота з ООП",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
