@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Food Delivery Promise System</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="order-card">
+    <h2>Система обробки замовлень їжі</h2>
+    <hr style="border:0; border-top: 1px solid #e2e8f0; margin-bottom: 20px;">
+
+    <div class="status-container">
+        <span>Поточний стан замовлення:</span>
+        <span id="current-status" class="status-badge status-idle">Очікування</span>
+    </div>
+
+    <button id="btn-start-order">Надіслати замовлення в обробку</button>
+
+    <div class="log-panel">
+        <h3>Трасування асинхронних етапів (Логування):</h3>
+        <ul id="log-list">
+            <li class="log-info">Натисніть кнопку для запуску ланцюжка нативних Promise...</li>
+        </ul>
+    </div>
+</div>
+
+<script type="module" src="src/app.js"></script>
+</body>
+</html>
