@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Functional Pipeline ETL</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="container">
+    <h2>Функціональний асинхронний Pipeline (ETL процес)</h2>
+    <hr style="border: 0; border-top: 1px solid #e2e8f0; margin-bottom: 20px;">
+
+    <div class="button-group">
+        <button id="btn-run-standard">Запустити звичайний режим (Всі товари)</button>
+        <button id="btn-run-premium" class="btn-secondary">Запустити преміум режим (Розгалуження)</button>
+    </div>
+
+    <h3>Трасування та логування виконання кроків (Debugging):</h3>
+    <div class="log-panel">
+        <ul id="log-list"><li>Натисніть кнопку для запуску асинхронного пайплайну...</li></ul>
+    </div>
+
+    <h3>Результуючий імутабельний об'єкт (Аналітика):</h3>
+    <pre id="result-output">Тут з'являться вихідні трансформовані дані.</pre>
+</div>
+
+<script type="module" src="src/app.js"></script>
+</body>
+</html>
