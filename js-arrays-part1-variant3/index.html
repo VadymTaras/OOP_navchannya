@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Task Management System</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="dashboard">
+    <div class="panel-block">
+        <h3>Нове завдання</h3>
+        <form id="task-form">
+            <div class="form-group">
+                <label>Назва:</label>
+                <input type="text" id="title" required placeholder="Напр. Здати лабораторну">
+            </div>
+            <div class="form-group">
+                <label>Опис:</label>
+                <textarea id="description" rows="2"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Категорія:</label>
+                <input type="text" id="category" value="Навчання">
+            </div>
+            <div class="form-group">
+                <label>Пріоритет:</label>
+                <select id="priority">
+                    <option value="low">Low</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Статус:</label>
+                <select id="status">
+                    <option value="todo" selected>Todo</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="done">Done</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Дедлайн:</label>
+                <input type="date" id="deadline" required>
+            </div>
+            <button type="submit">Додати</button>
+        </form>
+    </div>
+
+    <div>
+        <div class="stats-grid">
+            <div class="stat-box"><span id="stat-total">0</span><p>Всього</p></div>
+            <div class="stat-box"><span id="stat-done">0</span><p>Виконано</p></div>
+            <div class="stat-box"><span id="stat-overdue">0</span><p>Прострочено</p></div>
+            <div class="stat-box"><span id="stat-rate">0%</span><p>Успішність</p></div>
+        </div>
+
+        <div class="panel-block" style="margin-bottom: 15px;">
+            <div class="form-group">
+                <input type="text" id="search-input" placeholder="Пошук за назвою або описом...">
+            </div>
+
+            <div class="filters-row">
+                <select id="filter-status">
+                    <option value="">Всі статуси</option>
+                    <option value="todo">Todo</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="done">Done</option>
+                </select>
+                <select id="filter-priority">
+                    <option value="">Всі пріоритети</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+                <input type="text" id="filter-category" placeholder="Фільтр категорії...">
+                <select id="sort-by">
+                    <option value="createdAt">Новіші</option>
+                    <option value="priority">Пріоритет</option>
+                    <option value="deadline">Дедлайн</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="tasks-container" class="task-list"></div>
+    </div>
+</div>
+
+<script type="module" src="src/app.js"></script>
+</body>
+</html>
