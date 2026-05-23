@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Plugin System with Isolated Contexts</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="wrapper">
+    <h2>Система плагінів з ізольованими контекстами</h2>
+    <hr style="border:0; border-top: 1px solid #e2e8f0; margin-bottom: 20px;">
+
+    <div style="margin-bottom: 15px; font-size: 14px;">
+        Моніторинг активності інкапсульованого API: <b id="exec-count">0</b> викликів
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="card">
+            <h4>Analytics Plugin</h4>
+            <div class="actions">
+                <button id="btn-reg-analytics" class="btn-success">Install (Реєстрація)</button>
+                <button id="btn-exec-analytics">Execute (Обробка даних)</button>
+                <button id="btn-unreg-analytics" class="btn-danger">Uninstall (Видалення)</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h4>Report Plugin</h4>
+            <div class="actions">
+                <button id="btn-reg-report" class="btn-success">Install (Реєстрація)</button>
+                <button id="btn-exec-report">Execute (Генерація звіту)</button>
+                <button id="btn-unreg-report" class="btn-danger">Uninstall (Видалення)</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 20px;">
+        <h4>Список активних плагінів в ядрі системи:</h4>
+        <ul id="active-plugins"></ul>
+    </div>
+
+    <h3>Трасування викликів інкапсульованого API:</h3>
+    <div class="log-section">
+        <ul id="log-list"><li>Очікування реєстрації та виконання плагінів...</li></ul>
+    </div>
+</div>
+
+<script type="module" src="src/app.js"></script>
+</body>
+</html>
