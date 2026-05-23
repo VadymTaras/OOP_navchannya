@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipe Finder - Async API</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="app-wrapper">
+    <header>
+        <h1>Пошук рецептів здорової їжі</h1>
+    </header>
+
+    <div class="control-panel">
+        <form id="search-form" class="search-row">
+            <input type="text" id="search-input" required placeholder="Введіть назву страви або інгредієнти (наприклад: борщ, салат)...">
+            <button type="submit">Пошук</button>
+        </form>
+
+        <div class="filters-row">
+            <div class="filter-group">
+                <label>Дієта:</label>
+                <select id="filter-diet">
+                    <option value="">Всі варіанти</option>
+                    <option value="vegetarian">Vegetarian</option>
+                    <option value="vegan">Vegan</option>
+                    <option value="ketogenic">Keto</option>
+                    <option value="gluten free">Gluten Free</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Макс. час (хв):</label>
+                <input type="number" id="filter-time" min="0" placeholder="Будь-який">
+            </div>
+
+            <div class="filter-group">
+                <label>Макс. калорії:</label>
+                <input type="number" id="filter-calories" min="0" placeholder="Будь-які">
+            </div>
+
+            <button id="btn-favorites-toggle" class="btn-fav-toggle">Показати улюблені</button>
+        </div>
+    </div>
+
+    <div id="loading-indicator" class="ui-status hidden">Завантаження рецептів...</div>
+    <div id="error-message" class="ui-status error hidden"></div>
+
+    <main id="recipes-grid" class="recipes-grid"></main>
+</div>
+
+<div id="recipe-modal" class="modal-overlay">
+    <div class="modal-content">
+        <span id="close-modal" class="close-btn">&times;</span>
+        <div id="modal-body"></div>
+    </div>
+</div>
+
+<script src="src/dictionary.js"></script>
+<script src="src/api.js"></script>
+<script src="src/app.js"></script>
+</body>
+</html>
