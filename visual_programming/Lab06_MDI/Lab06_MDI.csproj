@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationTitle>Advanced MDI Studio</ApplicationTitle>
+    <RootNamespace>Lab06_MDI</RootNamespace>
+    <AssemblyName>Lab06_MDI</AssemblyName>
+  </PropertyGroup>
+
+</Project>
