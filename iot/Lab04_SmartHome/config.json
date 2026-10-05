@@ -1,0 +1,68 @@
+{
+  "system": {
+    "hub_id": "HUB-UKR-01",
+    "mqtt_broker": "localhost",
+    "mqtt_port": 1883,
+    "topic_base": "smarthome",
+    "log_file": "smart_home_telemetry.jsonl"
+  },
+  "climate": {
+    "zones": {
+      "living_room": {
+        "name": "Вітальня",
+        "target_temp_comfort": 22.0,
+        "target_temp_eco": 18.5,
+        "hysteresis": 0.5,
+        "current_mode": "comfort"
+      },
+      "bedroom": {
+        "name": "Спальня",
+        "target_temp_comfort": 20.0,
+        "target_temp_eco": 17.0,
+        "hysteresis": 0.5,
+        "current_mode": "comfort"
+      }
+    }
+  },
+  "energy": {
+    "max_power_watts": 2500.0,
+    "tariff_per_kwh": 4.32,
+    "plugs": {
+      "kitchen_boiler": {
+        "name": "Бойлер кухні",
+        "zone": "kitchen",
+        "priority": "medium",
+        "overload_threshold_w": 2200.0
+      },
+      "washing_machine": {
+        "name": "Пральна машина",
+        "zone": "bathroom",
+        "priority": "high",
+        "overload_threshold_w": 2400.0
+      }
+    }
+  },
+  "safety_security": {
+    "occupancy_timeout_seconds": 15,
+    "leak_sensors": ["bathroom_leak_01", "kitchen_leak_01"],
+    "valves": ["main_water_valve"],
+    "motion_sensors": ["living_room_motion_01", "corridor_motion_01"]
+  },
+  "rules": {
+    "night_mode": {
+      "enabled": true,
+      "temp_reduction_offset": 2.0,
+      "disarm_motion_in_bedroom": true
+    },
+    "away_mode": {
+      "enabled": true,
+      "auto_eco_climate": true,
+      "turn_off_non_critical_plugs": true
+    },
+    "emergency_leak": {
+      "enabled": true,
+      "action_valve_close": true,
+      "action_cut_zone_power": true
+    }
+  }
+}
