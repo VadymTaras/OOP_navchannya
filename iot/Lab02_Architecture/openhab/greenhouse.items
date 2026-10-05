@@ -1,0 +1,13 @@
+Group gGreenhouse "Розумна теплиця" <greenhouse>
+
+Number:Temperature Greenhouse_Temp "Температура [%.1f °C]" <temperature> (gGreenhouse) 
+    { channel="mqtt:topic:mosquitto:greenhouse_node1:temperature" }
+
+Number:Dimensionless Greenhouse_Hum "Вологість повітря [%.1f %%]" <humidity> (gGreenhouse) 
+    { channel="mqtt:topic:mosquitto:greenhouse_node1:humidity" }
+
+Number:Dimensionless Greenhouse_Soil "Вологість ґрунту [%d %%]" <water> (gGreenhouse) 
+    { channel="mqtt:topic:mosquitto:greenhouse_node1:soil_moisture" }
+
+Switch Greenhouse_Ventilation_Relay "Вентилятор охолодження" <fan> (gGreenhouse) 
+    { channel="mqtt:topic:mosquitto:greenhouse_node1:relay_switch", autoupdate="false" }

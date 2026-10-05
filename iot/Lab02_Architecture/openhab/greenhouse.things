@@ -1,0 +1,29 @@
+Bridge mqtt:broker:mosquitto "MQTT Mosquitto Broker" [
+    host="broker.emqx.io",
+    port=1883,
+    secure=false,
+    clientID="OpenHAB3_Server_Taras"
+] {
+    Thing topic greenhouse_node1 "Smart Greenhouse ESP32 Node" {
+        Channels:
+            Type number : temperature "Температура повітря" [ 
+                stateTopic="greenhouse/node1/telemetry", 
+                transformationPattern="JSONPATH:$.temp" 
+            ]
+            Type number : humidity "Вологість повітря" [ 
+                stateTopic="greenhouse/node1/telemetry", 
+                transformationPattern="JSONPATH:$.hum" 
+            ]
+            Type number : soil_moisture "Вологість ґрунту" [ 
+                stateTopic="greenhouse/node1/telemetry", 
+                transformationPattern="JSONPATH:$.soil" 
+            ]
+            Type switch : relay_switch "Реле вентиляції" [ 
+                stateTopic="greenhouse/node1/telemetry", 
+                transformationPattern="JSONPATH:$.relay",
+                commandTopic="greenhouse/node1/relay/cmd", 
+                on="ON", 
+                off="OFF" 
+            ]
+    }
+}

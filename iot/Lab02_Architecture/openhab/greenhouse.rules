@@ -1,0 +1,18 @@
+rule "Auto_Ventilation_Trigger"
+when
+    Item Greenhouse_Temp changed
+then
+    val currentTemp = (Greenhouse_Temp.state as DecimalType).floatValue
+    val relayCurrentState = Greenhouse_Ventilation_Relay.state
+
+    // Якщо температура перевищує 24.0 °C, а реле ще вимкнене — увімкнути охолодження
+    if (currentTemp > 24.0 && relayCurrentState != ON) {
+        logInfo("GreenhouseAutomation", "Температура досягла " + currentTemp + "°C! Вмикання вентиляції.")
+        Greenhouse_Ventilation_Relay.sendCommand(ON)
+    }
+    // Гістерезис: коли температура опускається нижче 23.0 °C — вимкнути
+    else if (currentTemp < 23.0 && relayCurrentState != OFF) {
+        logInfo("GreenhouseAutomation", "Температура нормалізувалася (" + currentTemp + "°C). Вимикання вентиляції.")
+        Greenhouse_Ventilation_Relay.sendCommand(OFF)
+    }
+end
